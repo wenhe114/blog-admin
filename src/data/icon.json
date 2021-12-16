@@ -132,6 +132,10 @@
         "icon":"icon-computer"
     },
     {
+        "name":"编辑器",
+        "icon":"icon-edit"
+    },
+    {
         "name":"其他",
         "icon":"icon-qita"
     }
