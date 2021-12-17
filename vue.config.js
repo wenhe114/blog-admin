@@ -8,7 +8,7 @@ module.exports = {
         proxy: {
             // 配置跨域
             '/blogApi': {
-                target: 'http://127.0.0.1:7001',
+                target: 'http://101.42.234.72:7001',
                 ws: true, // 是否跨域
                 changeOrigin: true,
                 // 重写地址
@@ -17,7 +17,7 @@ module.exports = {
                 }
             },
             '/public/upload': {
-                target: 'http://127.0.0.1:7001',
+                target: 'http://101.42.234.72:7001',
             },
             // '/files': {
             //     target: 'http://127.0.0.1:1080',

@@ -13,10 +13,16 @@ import '@kangc/v-md-editor/lib/style/base-editor.css';
 import vuepressTheme from '@kangc/v-md-editor/lib/theme/vuepress.js';
 import '@kangc/v-md-editor/lib/theme/style/vuepress.css';
 import Prism from 'prismjs';
+import createLineNumbertPlugin from '@kangc/v-md-editor/lib/plugins/line-number/index.js';
+import createHighlightLinesPlugin from '@kangc/v-md-editor/lib/plugins/highlight-lines/index.js';
+import '@kangc/v-md-editor/lib/plugins/highlight-lines/highlight-lines.css';
+
 // highlightjs
-VueMarkdownEditor.use(vuepressTheme, {
-    Prism,
-  });
+VueMarkdownEditor.use(vuepressTheme,  {
+  Prism,
+});
+VueMarkdownEditor.use(createLineNumbertPlugin())
+VueMarkdownEditor.use(createHighlightLinesPlugin())
 // 按需引入
 // import {Button} from 'ant-design-vue';
 
