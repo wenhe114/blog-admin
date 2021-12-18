@@ -51,7 +51,8 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs, ref, onMounted,watch } from "vue";
 import {getMenuListApi} from "@/api/modules/menuApi"
-import iconData from "@/data/icon.json";
+import {getIconListApi} from "@/api/modules/iconApi"
+// import iconData from "@/data/icon.json";
 export default defineComponent({
   props:["modelValue"],
   setup(props,{emit}) {
@@ -63,14 +64,22 @@ export default defineComponent({
       // },
       rules: {},
       iconVisible: false,
-      menuList:[]
+      menuList:[],
+      iconData:[]
     });
     onMounted(()=>{
+      getIconList()
         getMenuList()
     })
     watch(()=>formData,()=>{
       emit("update:modelValue",formData)
     },{deep:true})
+    // 获取icon
+    function getIconList(){
+      getIconListApi().then((res:any)=>{
+        reactiveData.iconData=res.data
+      })
+    }
     // 获取菜单
     function getMenuList() {
         getMenuListApi().then((res:any)=>{
@@ -90,7 +99,6 @@ export default defineComponent({
       ...toRefs(reactiveData),
       formRef,
       openIconModal,
-      iconData,
       selectBtn,
       closeIconModal,
       formData

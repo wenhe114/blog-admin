@@ -47,13 +47,28 @@
           ><router-link to="/admin/menu/add">添加菜单</router-link></a-menu-item
         >
       </a-sub-menu>
-      <a-menu-item key="4">
+      <a-sub-menu key="4">
+        <template #icon>
+          <span>
+            <span class="iconfont icon-icon_shezhi"></span>
+          </span>
+        </template>
+        <template #title>图标管理</template>
+        <a-menu-item key="4-1">
+          <span
+            ><router-link to="/admin/icon/list">图标列表</router-link></span
+          ></a-menu-item
+        >
+      </a-sub-menu>
+      <a-menu-item key="5">
         <template #icon>
           <span>
             <span class="iconfont icon-guanyuwomen"></span>
           </span>
         </template>
-        <span><router-link to="/admin/about">关于我</router-link></span></a-menu-item
+        <span
+          ><router-link to="/admin/about">关于我</router-link></span
+        ></a-menu-item
       >
     </a-menu>
   </div>

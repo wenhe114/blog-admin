@@ -34,6 +34,11 @@ const adminRoutes: Array<RouteRecordRaw> = [
         component: () => import("../views/menu/menuList.vue")
       },
       {
+        path: "icon/list",
+        name: "icon-list",
+        component: () => import("../views/icon/list.vue")
+      },
+      {
         path: "about",
         name: "about",
         component: () => import("../views/about/about.vue")
