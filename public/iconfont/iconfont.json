@@ -6,6 +6,13 @@
   "description": "博客专属图标设计",
   "glyphs": [
     {
+      "icon_id": "12399667",
+      "name": "资源 9",
+      "font_class": "ziyuan",
+      "unicode": "eeb1",
+      "unicode_decimal": 61105
+    },
+    {
       "icon_id": "4347549",
       "name": "icon_设置",
       "font_class": "icon_shezhi",

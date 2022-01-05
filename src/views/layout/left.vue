@@ -50,17 +50,31 @@
       <a-sub-menu key="4">
         <template #icon>
           <span>
+            <span class="iconfont icon-ziyuan"></span>
+          </span>
+        </template>
+        <template #title>资源管理</template>
+        <a-menu-item key="4-1">
+          <span
+            ><router-link to="/admin/resource">资源列表</router-link></span
+          ></a-menu-item
+        >
+      </a-sub-menu>
+      <a-sub-menu key="5">
+        <template #icon>
+          <span>
             <span class="iconfont icon-icon_shezhi"></span>
           </span>
         </template>
         <template #title>图标管理</template>
-        <a-menu-item key="4-1">
+        <a-menu-item key="5-1">
           <span
             ><router-link to="/admin/icon/list">图标列表</router-link></span
           ></a-menu-item
         >
       </a-sub-menu>
-      <a-menu-item key="5">
+      
+      <a-menu-item key="6">
         <template #icon>
           <span>
             <span class="iconfont icon-guanyuwomen"></span>
