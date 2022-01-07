@@ -81,6 +81,13 @@
           :auto-size="{ minRows: 2, maxRows: 5 }"
         ></a-textarea>
       </a-form-item>
+      <a-form-item name="about_page">
+        <template #label>内容:</template>
+        <vue-markdown
+          v-model:value="formData.about_page"
+          v-model:content="formData.content"
+        ></vue-markdown>
+      </a-form-item>
     </a-form>
     <div style="text-align: center">
       <a-button type="primary" @click="updateInfo">更新</a-button>
@@ -94,11 +101,12 @@ import { LoadingOutlined, PlusOutlined } from "@ant-design/icons-vue";
 import { uploadCoverApi } from "@/api/modules/contentApi";
 import { getAboutInfoApi, updateAboutApi } from "@/api/modules/aboutApi";
 import { message } from "ant-design-vue";
-import * as tus from "tus-js-client";
+import vueMarkdown from "@/components/vue-markdown/vue-markdown.vue"
 export default defineComponent({
   components: {
     "loading-outlined": LoadingOutlined,
     "plus-outlined": PlusOutlined,
+     "vue-markdown": vueMarkdown,
   },
   setup() {
     const rules = {};
