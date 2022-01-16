@@ -198,11 +198,9 @@ export default defineComponent({
       deleteBtn() {},
       onSelectChange(selectedRowKeys: any[]) {
         reactiveData.selectedRowKeys = selectedRowKeys;
-        console.log(reactiveData.selectedRowKeys);
       },
       onSelectDataChange(selectedRowKeys: any[]) {
         reactiveData.selectedDataRowKeys = selectedRowKeys;
-        console.log(reactiveData.selectedDataRowKeys);
       },
       getResourceList() {
         let type_id: string = reactiveData.currentTypeId
@@ -214,8 +212,6 @@ export default defineComponent({
       },
       getResourceTypeList() {
         getResourceTypeListApi().then((res: any) => {
-          console.log(res);
-
           reactiveData.typeList = res.data;
         });
       },
@@ -238,13 +234,11 @@ export default defineComponent({
         reactiveData.addTypeVisible = true;
       },
       addType() {
-        console.log(121);
         if (reactiveData.typeId) {
           updateResourceTypeApi({
             type: reactiveData.typeName,
             id: reactiveData.typeId,
           }).then((res: any) => {
-            console.log(res);
             reactiveData.addTypeVisible = false;
             method.getResourceTypeList();
             reactiveData.typeName = "";
@@ -253,7 +247,6 @@ export default defineComponent({
         } else {
           addResourceTypeApi({ type: reactiveData.typeName }).then(
             (res: any) => {
-              console.log(res);
               reactiveData.addTypeVisible = false;
               method.getResourceTypeList();
               reactiveData.typeName = "";
@@ -263,21 +256,17 @@ export default defineComponent({
       },
       deleteTypeBtn(val:any){
         if (val) {
-          console.log(val);
           method.deleteResourceType(val)
         }else{
           // 批量删除
           if (reactiveData.selectedRowKeys.length==0) {
             message.warn("未选择数据")
           }
-          console.log(reactiveData.selectedRowKeys);
           const ids=reactiveData.selectedRowKeys.join(",")
           method.deleteResourceType(ids)
         }
       },
       deleteResourceType(ids:string){
-        console.log(ids);
-        
         Modal.confirm({
           title:"删除提示",
           content:"确认删除吗",
@@ -301,17 +290,15 @@ export default defineComponent({
         }
       },
       submit(){
-        console.log("reactiveData.resourceData",reactiveData.resourceData);
-        
         if (reactiveData.id) {
           updateResourcApi({...reactiveData.resourceData}).then((res:any)=>{
-            console.log(res);
+           
             method.getResourceList()
             reactiveData.addVisible=false
           })
         }else{
           addResourceApi({...reactiveData.resourceData}).then((res:any)=>{
-            console.log(res);
+            
             method.getResourceList()
             reactiveData.addVisible=false
           })
@@ -319,20 +306,18 @@ export default defineComponent({
       },
       deleteData(val:any){
          if (val) {
-          console.log(val);
+          
           method.deleteResource(val)
         }else{
           // 批量删除
           if (reactiveData.selectedDataRowKeys.length==0) {
             message.warn("未选择数据")
           }
-          console.log(reactiveData.selectedDataRowKeys);
           const ids=reactiveData.selectedDataRowKeys.join(",")
           method.deleteResource(ids)
         }
       },
        deleteResource(ids:string){
-        console.log(ids);
         
         Modal.confirm({
           title:"删除提示",

@@ -59,7 +59,7 @@
       @cancel="cancelModal"
       :width="800"
     >
-      <content-form v-if="editVisible" v-model="formData"></content-form>
+      <content-form v-if="editVisible" v-model:value="formData"></content-form>
     </a-modal>
   </div>
 </template>
@@ -178,8 +178,12 @@ export default defineComponent({
       getContentList();
     }
     function editContent(val: any) {
-      reactiveData.formData = cloneDeep(val);
+      
       reactiveData.editVisible = true;
+        if (val) {
+          val.types=val.type.split(",")
+          reactiveData.formData = cloneDeep(val);
+        }
     }
     function deleteContent(id: number) {
       Modal.confirm({

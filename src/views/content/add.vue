@@ -1,6 +1,6 @@
 <template>
   <div class="add-content-box">
-    <content-form v-model="formData"></content-form>
+    <content-form v-model:value="formData"></content-form>
     <div class="action-btn-box">
       <a-button @click="submit" type="primary">提交</a-button>
     </div>

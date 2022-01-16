@@ -9,7 +9,12 @@
           :before-upload="beforeUpload"
           action="/blogApi/upload/mdimg"
         >
-          <img style="width:100%;height:100%" v-if="formData.img" :src="formData.img" alt="avatar" />
+          <img
+            style="width: 100%; height: 100%"
+            v-if="formData.img"
+            :src="formData.img"
+            alt="avatar"
+          />
           <div v-else>
             <loading-outlined v-if="loading"></loading-outlined>
             <plus-outlined v-else></plus-outlined>
@@ -35,7 +40,24 @@
       </a-form-item>
       <a-form-item name="type">
         <template #label>类型：</template>
-        <a-select
+        <a-checkbox-group v-model:value="formData.types">
+          <template v-for="item in typeSelectData" :key="item.id">
+            <template v-if="item.children && item.children.length > 0">
+              <a-checkbox
+                v-for="cit in item.children"
+                :key="cit.id"
+                :value="cit.id.toString()"
+                >{{ cit.meun_title }}</a-checkbox
+              >
+            </template>
+            <template v-else>
+              <a-checkbox :key="item.id" :value="item.id.toString()">{{
+                item.meun_title
+              }}</a-checkbox>
+            </template>
+          </template>
+        </a-checkbox-group>
+        <!-- <a-select
           v-model:value="formData.type"
           style="width: 300px"
           @change="typeChange"
@@ -52,9 +74,9 @@
               <a-select-option :key="item.id" :value="item.id.toString()">{{item.meun_title}}</a-select-option>
             </template>
           </a-select-opt-group>
-        </a-select>
+        </a-select> -->
       </a-form-item>
-      
+
       <a-form-item name="author">
         <template #label>作者：</template>
         <a-select
@@ -63,7 +85,12 @@
           @change="authorChange"
           placeholder="请选择作者"
         >
-          <a-select-option v-for="item in userData" :value="item.name" :key="item.name">{{item.name}}</a-select-option>
+          <a-select-option
+            v-for="item in userData"
+            :value="item.name"
+            :key="item.name"
+            >{{ item.name }}</a-select-option
+          >
         </a-select>
       </a-form-item>
       <a-form-item name="content_md">
@@ -80,13 +107,13 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs, ref, watch, onMounted } from "vue";
 // import vueEditormd from "@/components/editormd/editormd.vue";
-import vueMarkdown from "@/components/vue-markdown/vue-markdown.vue"
+import vueMarkdown from "@/components/vue-markdown/vue-markdown.vue";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons-vue";
 // import {uploadCover} from "@/api/mudule/upload"
 // import request from "@/api/index"
 import { uploadCoverApi } from "@/api/modules/contentApi";
-import {getMenuListApi} from "@/api/modules/menuApi"
-import {getUserListApi} from "@/api/modules/userApi"
+import { getMenuListApi } from "@/api/modules/menuApi";
+import { getUserListApi } from "@/api/modules/userApi";
 interface FileItem {
   uid: string;
   name?: string;
@@ -103,31 +130,61 @@ export default defineComponent({
     "loading-outlined": LoadingOutlined,
     "plus-outlined": PlusOutlined,
   },
-  props: ["modelValue", "rules"],
+  props: ["value", "rules"],
   setup(props, { emit }) {
-    
-    const reactiveData=reactive({
-      typeSelectData:[],
-      userData:[]
-    })
-    const formData = props.modelValue;
+    const reactiveData = reactive({
+      typeSelectData: [],
+      userData: [],
+      formData: {
+        types: [],
+      },
+    });
+    watch(
+      () => props.value,
+      () => {
+        reactiveData.formData = props.value;
+      },
+      {
+        deep: true,
+        immediate: true,
+      }
+    );
+    watch(
+      () => reactiveData.formData,
+      () => {
+        emit("update:value",reactiveData.formData)
+      },
+      {
+        deep: true,
+      }
+    );
+    watch(
+      () => (reactiveData.formData as any).types,
+      () => {
+          (reactiveData.formData as any).type=(reactiveData.formData as any).types.join(",")
+      },
+      {
+        deep: true,
+      }
+    );
+    // const formData:{types:string} = props.modelValue;
     const rules = props.rules;
     const loading = ref(false);
-  
-    onMounted(()=>{
-      getMenuList()
-      getUserList()
-    })
+
+    onMounted(() => {
+      getMenuList();
+      getUserList();
+    });
     // 上传封面
     const beforeUpload = (files: any) => {
       const body = new FormData();
       body.append("img", files);
-      uploadCoverApi(body).then((res:any)=>{
-        formData.img=res.url
-      })
+      uploadCoverApi(body).then((res: any) => {
+        (reactiveData.formData as any).img = res.url;
+      });
       return false;
     };
-    
+
     function typeChange(val: any) {
       console.log(val);
     }
@@ -136,24 +193,23 @@ export default defineComponent({
     }
     // 获取菜单
     function getMenuList() {
-      getMenuListApi().then(res=>{
-        reactiveData.typeSelectData=res.data
-      })
+      getMenuListApi().then((res) => {
+        reactiveData.typeSelectData = res.data;
+      });
     }
     // 获取用户
     function getUserList() {
-      getUserListApi().then((res)=>{
-        reactiveData.userData=res.data
-      })
+      getUserListApi().then((res) => {
+        reactiveData.userData = res.data;
+      });
     }
     return {
-      formData,
       rules,
       loading,
       beforeUpload,
       typeChange,
       authorChange,
-      ...toRefs(reactiveData)
+      ...toRefs(reactiveData),
     };
   },
 });

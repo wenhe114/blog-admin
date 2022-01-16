@@ -87,13 +87,10 @@ export default defineComponent({
           type_ids:[]
       },
     });
-    console.log(props.typeList);
-    
     watch(
       () => props.value,
       () => {
         reactiveData.formState = props.value;
-        console.log("reactiveData.formState",reactiveData.formState);
       },
       {
         deep: true,
@@ -103,7 +100,6 @@ export default defineComponent({
     watch(
       () => reactiveData.formState,
       () => {
-          console.log("reactiveData.formState",reactiveData.formState);
         emit("update:value",reactiveData.formState)
       },
       {
