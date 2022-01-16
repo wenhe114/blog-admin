@@ -50,6 +50,7 @@
         v-model:current="params.currentPage"
         v-model:pageSize="params.pageSize"
         :total="total"
+        @change="pageChange"
       />
     </div>
     <a-modal
@@ -217,6 +218,11 @@ export default defineComponent({
       });
       (reactiveData.contentList as any)[i] = reactiveData.formData;
     }
+    function pageChange(page:number, pageSize:number) {
+      reactiveData.params.currentPage=page
+      reactiveData.params.pageSize=pageSize
+      getContentList();
+    }
     return {
       ...toRefs(reactiveData),
       typeChange,
@@ -226,6 +232,7 @@ export default defineComponent({
       deleteContent,
       submit,
       cancelModal,
+      pageChange
     };
   },
 });
